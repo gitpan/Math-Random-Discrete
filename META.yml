@@ -1,0 +1,20 @@
+---
+abstract: 'Discrete random variables with general distributions'
+author:
+  - 'Nick Wellnhofer <wellnhofer@aevum.de>'
+build_requires:
+  Test::More: 0
+configure_requires:
+  ExtUtils::MakeMaker: 6.31
+dynamic_config: 0
+generated_by: 'Dist::Zilla version 4.200000, CPAN::Meta::Converter version 2.102400'
+license: perl
+meta-spec:
+  url: http://module-build.sourceforge.net/META-spec-v1.4.html
+  version: 1.4
+name: Math-Random-Discrete
+requires:
+  perl: 5.008
+resources:
+  repository: http://github.com/nwellnhof/Math-Random-Discrete
+version: 1.00
