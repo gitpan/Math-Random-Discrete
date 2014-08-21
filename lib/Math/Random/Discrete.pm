@@ -1,8 +1,9 @@
 package Math::Random::Discrete;
-BEGIN {
-  $Math::Random::Discrete::VERSION = '1.00';
+{
+  $Math::Random::Discrete::VERSION = '1.01';
 }
 use strict;
+use warnings;
 
 # ABSTRACT: Discrete random variables with general distributions
 
@@ -41,15 +42,8 @@ sub new {
 
     my (@F, @A);
 
-    while (@small) {
-        my $i = pop(@small);
-
-        if (!@large) {
-            $A[$i] = $i;
-            $F[$i] = 1.0;
-            next;
-        }
-
+    while (@small and @large) {
+        my $i  = pop(@small);
         my $j  = $large[-1];
         $A[$i] = $j;
         $F[$i] = $weights[$i] / $avg;
@@ -60,7 +54,7 @@ sub new {
             if $weights[$j] <= $avg;
     }
 
-    for my $i (@large) {
+    for my $i (@small, @large) {
         $A[$i] = $i;
         $F[$i] = 1.0;
     }
@@ -80,7 +74,7 @@ sub rand {
     my $self = shift;
 
     my $F  = $self->{F};
-    my $r  = rand(@$F);
+    my $r  = CORE::rand(@$F);
     my $ri = int($r);  # integer part
     my $rf = $r - $ri; # fractional part
 
@@ -88,14 +82,16 @@ sub rand {
 
     my $values = $self->{values};
 
-    return $values ? $self->{values}[$i] : $i;
+    return $values ? $values->[$i] : $i;
 }
 
 1;
 
-
+__END__
 
 =pod
+
+=encoding UTF-8
 
 =head1 NAME
 
@@ -103,7 +99,7 @@ Math::Random::Discrete - Discrete random variables with general distributions
 
 =head1 VERSION
 
-version 1.00
+version 1.01
 
 =head1 SYNOPSIS
 
@@ -148,14 +144,9 @@ Nick Wellnhofer <wellnhofer@aevum.de>
 
 =head1 COPYRIGHT AND LICENSE
 
-This software is copyright (c) 2011 by Nick Wellnhofer.
+This software is copyright (c) 2014 by Nick Wellnhofer.
 
 This is free software; you can redistribute it and/or modify it under
 the same terms as the Perl 5 programming language system itself.
 
 =cut
-
-
-__END__
-
-
